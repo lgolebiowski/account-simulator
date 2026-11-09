@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Python Bank</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Python Bank</h1>
+    <button id="logout" class="link" hidden>Log out</button>
+  </header>
+
+  <main>
+    <!-- Not logged in -->
+    <section id="view-guest" hidden>
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tab-login" aria-controls="panel-login" aria-selected="true">Log in</button>
+        <button role="tab" id="tab-open" aria-controls="panel-open" aria-selected="false">Open an account</button>
+      </div>
+
+      <form id="panel-login" class="card" role="tabpanel" aria-labelledby="tab-login">
+        <label>Account number
+          <input id="login-number" inputmode="numeric" autocomplete="username" maxlength="10" required>
+        </label>
+        <label>PIN
+          <input id="login-pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="4" required>
+        </label>
+        <button type="submit">Log in</button>
+      </form>
+
+      <form id="panel-open" class="card" role="tabpanel" aria-labelledby="tab-open" hidden>
+        <label>Your name
+          <input id="open-owner" autocomplete="name" maxlength="100" required>
+        </label>
+        <label>Choose a 4-digit PIN
+          <input id="open-pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="4" required>
+        </label>
+        <button type="submit">Open account</button>
+      </form>
+
+      <p class="muted center"><button id="show-admin" class="link">Staff sign-in</button></p>
+    </section>
+
+    <!-- Staff sign-in -->
+    <section id="view-admin-login" hidden>
+      <form id="admin-login-form" class="card">
+        <h2>Staff sign-in</h2>
+        <label>Username <input id="admin-user" autocomplete="username" required></label>
+        <label>Password <input id="admin-pass" type="password" autocomplete="current-password" required></label>
+        <button type="submit">Sign in</button>
+      </form>
+      <p class="muted center"><button id="back-to-guest" class="link">Back to customer login</button></p>
+    </section>
+
+    <!-- Customer dashboard -->
+    <section id="view-customer" hidden>
+      <div class="card balance-card">
+        <p class="muted" id="who"></p>
+        <p class="label">Current balance</p>
+        <p class="balance" id="balance" aria-live="polite">&nbsp;</p>
+      </div>
+
+      <form id="deposit-form" class="card">
+        <h2>Deposit</h2>
+        <label>Amount ($)
+          <input id="deposit-amount" inputmode="decimal" autocomplete="off" placeholder="0.00" required>
+        </label>
+        <button type="submit">Deposit</button>
+      </form>
+
+      <form id="withdraw-form" class="card">
+        <h2>Withdraw</h2>
+        <label>Amount ($)
+          <input id="withdraw-amount" inputmode="decimal" autocomplete="off" placeholder="0.00" required>
+        </label>
+        <button type="submit">Withdraw</button>
+      </form>
+
+      <form id="transfer-form" class="card">
+        <h2>Transfer</h2>
+        <label>Recipient account number
+          <input id="transfer-to" inputmode="numeric" autocomplete="off" maxlength="10" required>
+        </label>
+        <label>Amount ($)
+          <input id="transfer-amount" inputmode="decimal" autocomplete="off" placeholder="0.00" required>
+        </label>
+        <button type="submit">Send money</button>
+      </form>
+
+      <form id="statement-form" class="card">
+        <h2>Statement</h2>
+        <div class="range">
+          <label>From <input id="stmt-start" type="date" required></label>
+          <label>To <input id="stmt-end" type="date" required></label>
+        </div>
+        <div class="row">
+          <button type="submit">Show</button>
+          <button type="button" id="stmt-csv" class="secondary">Download CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table id="stmt-table" hidden>
+            <thead>
+              <tr><th scope="col">Date</th><th scope="col">Details</th>
+                  <th scope="col" class="num">Amount</th><th scope="col" class="num">Balance</th></tr>
+            </thead>
+            <tbody id="stmt-body"></tbody>
+          </table>
+        </div>
+        <p id="stmt-empty" class="muted" hidden>No transactions in this period.</p>
+      </form>
+    </section>
+
+    <!-- Admin dashboard -->
+    <section id="view-admin" hidden>
+      <form id="unlock-form" class="card">
+        <h2>Unlock an account</h2>
+        <label>Account number
+          <input id="unlock-number" inputmode="numeric" maxlength="10" required>
+        </label>
+        <button type="submit">Unlock</button>
+      </form>
+    </section>
+
+    <p id="message" role="status" aria-live="polite" class="message" hidden></p>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
