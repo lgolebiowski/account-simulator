@@ -1,0 +1,28 @@
+{
+  "_about": "Single source of truth for who may edit what. Read by hooks/guard-paths.py (blocks edits as they happen) and hooks/audit-ownership.py (checks after an agent returns). Globs use fnmatch on repo-relative paths, so * also matches across folders. Order of checks: global_deny, then the agent's deny, then its allow.",
+  "global_deny": [".git/*", ".venv/*", ".claude/*", "CLAUDE.md", "docs/*", "requirements*.txt", "ruff.toml", ".gitignore"],
+  "agents": {
+    "backend-engineer": {
+      "allow": ["bankapp/api.py", "bankapp/services.py", "bankapp/statements.py", "bankapp/errors.py", "bankapp/config.py", "bankapp/security.py", "tests/test_*.py"],
+      "deny": ["tests/test_ui.py", "tests/test_cli.py", "tests/test_db_*.py"]
+    },
+    "database-engineer": {
+      "allow": ["bankapp/models.py", "bankapp/db.py", "docker-compose.yml", "tests/test_db_*.py"],
+      "deny": []
+    },
+    "frontend-engineer": {
+      "allow": ["bankapp/static/*", "tests/test_ui.py"],
+      "deny": []
+    },
+    "cli-engineer": {
+      "allow": ["cli.py", "tests/test_cli.py"],
+      "deny": []
+    },
+    "qa-engineer": {
+      "allow": ["tests/*"],
+      "deny": []
+    },
+    "security-reviewer": { "allow": [], "deny": [] },
+    "code-reviewer": { "allow": [], "deny": [] }
+  }
+}
